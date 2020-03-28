@@ -1,0 +1,5 @@
+opencv
+numpy 
+argparse
+imutils
+time
