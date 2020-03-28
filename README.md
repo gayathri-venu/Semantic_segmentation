@@ -15,7 +15,7 @@ To implement Semantic segmentation on images and videos using OpenCV and deep le
 ### Approach
 
 
-Semantic segmentation on images
+#### Semantic segmentation on images
 
 1. Load the serialized model from disk.The semantic segmentation architecture we’re using here is ENet and it is trained on The Cityscapes Dataset, a semantic, instance-wise, dense pixel annotation of 20-30 classes
 
@@ -34,7 +34,7 @@ Semantic segmentation on images
 8. And finally, overlay the mask on the frame transparently to visualise the segmentation.
 
 
-Semantic segmentation on videos
+#### Semantic segmentation on videos
 
 1. Load the serialized model from disk.
 
