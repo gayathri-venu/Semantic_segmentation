@@ -44,9 +44,7 @@ To implement Semantic segmentation on images and videos using OpenCV and deep le
 
 4. Loop over the frames and perform the same steps we performed for images.
 
-5. Estimate how long  it will take to process the video using the total  video frame count.
-
-6. Write the output to disk. 
+5. Write the output frame to disk. 
 
 
 ### Output
