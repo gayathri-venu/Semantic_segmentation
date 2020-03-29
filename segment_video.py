@@ -6,7 +6,6 @@
 import numpy as np
 import argparse
 import imutils
-import time
 import cv2
 
 # construct the argument parse and parse the arguments
@@ -19,8 +18,6 @@ ap.add_argument("-v", "--video", required=True,
 	help="path to input video file")
 ap.add_argument("-o", "--output", required=True,
 	help="path to output video file")
-ap.add_argument("-s", "--show", type=int, default=1,
-	help="whether or not to display frame to screen")
 ap.add_argument("-l", "--colors", type=str,
 	help="path to .txt file containing colors for labels")
 ap.add_argument("-w", "--width", type=int, default=500,
@@ -48,25 +45,12 @@ else:
 	COLORS = np.vstack([[0, 0, 0], COLORS]).astype("uint8")
 
 # load our serialized model from disk
-print("[INFO] loading model...")
 net = cv2.dnn.readNet(args["model"])
 
 # initialize the video stream and pointer to output video file
 vs = cv2.VideoCapture(args["video"])
 writer = None
 
-# try to determine the total number of frames in the video file
-try:
-	prop =  cv2.cv.CV_CAP_PROP_FRAME_COUNT if imutils.is_cv2() \
-		else cv2.CAP_PROP_FRAME_COUNT
-	total = int(vs.get(prop))
-	print("[INFO] {} total frames in video".format(total))
-
-# an error occurred while trying to determine the total
-# number of frames in the video file
-except:
-	print("[INFO] could not determine # of frames in video")
-	total = -1
 
 # loop over frames from the video file stream
 while True:
@@ -84,9 +68,8 @@ while True:
 	blob = cv2.dnn.blobFromImage(frame, 1 / 255.0, (1024, 512), 0,
 		swapRB=True, crop=False)
 	net.setInput(blob)
-	start = time.time()
 	output = net.forward()
-	end = time.time()
+	
 
 	# infer the total number of classes along with the spatial
 	# dimensions of the mask image via the shape of the output array
@@ -118,26 +101,19 @@ while True:
 		writer = cv2.VideoWriter(args["output"], fourcc, 30,
 			(output.shape[1], output.shape[0]), True)
 
-		# some information on processing single frame
-		if total > 0:
-			elap = (end - start)
-			print("[INFO] single frame took {:.4f} seconds".format(elap))
-			print("[INFO] estimated total time: {:.4f}".format(
-				elap * total))
+
 
 	# write the output frame to disk
 	writer.write(output)
-
-	# check to see if we should display the output frame to our screen
-	if args["show"] > 0:
-		cv2.imshow("Frame", output)
-		key = cv2.waitKey(1) & 0xFF
+        
+	#display the output frame
+	cv2.imshow("Frame", output)
+	key = cv2.waitKey(1) & 0xFF
  
-		# if the `q` key was pressed, break from the loop
-		if key == ord("q"):
-			break
+	# if the esc key was pressed, break from the loop
+	if key == 27:
+	       break
 
 # release the file pointers
-print("[INFO] cleaning up...")
 writer.release()
 vs.release()
