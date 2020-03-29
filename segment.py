@@ -34,8 +34,7 @@ if args["colors"]:
 # label
 else:
 	# initialize a list of colors to represent each class label in
-	# the mask (starting with 'black' for the background/unlabeled
-	# regions)
+	# the mask
 	np.random.seed(42)
 	COLORS = np.random.randint(0, 255, size=(len(CLASSES) - 1, 3),
 		dtype="uint8")
@@ -57,7 +56,7 @@ for (i, (className, color)) in enumerate(zip(CLASSES, COLORS)):
 net = cv2.dnn.readNet(args["model"])
 
 # load the input image, resize it, and construct a blob from it,
-# but keeping mind mind that the original input image dimensions
+# by keeping mind that the original input image dimensions
 # ENet was trained on was 1024x512
 image = cv2.imread(args["image"])
 image = imutils.resize(image, width=args["width"])
@@ -85,13 +84,9 @@ classMap = np.argmax(output[0], axis=0)
 # corresponding color
 mask = COLORS[classMap]
 
-# resize the mask and class map such that its dimensions match the
-# original size of the input image (we're not using the class map
-# here for anything else but this is how you would resize it just in
-# case you wanted to extract specific pixels/classes)
+# resize the mask such that its dimensions match the
+# original size of the input image 
 mask = cv2.resize(mask, (image.shape[1], image.shape[0]),
-	interpolation=cv2.INTER_NEAREST)
-classMap = cv2.resize(classMap, (image.shape[1], image.shape[0]),
 	interpolation=cv2.INTER_NEAREST)
 
 # perform a weighted combination of the input image with the mask to
