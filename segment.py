@@ -5,7 +5,6 @@
 import numpy as np
 import argparse
 import imutils
-import time
 import cv2
 
 # construct the argument parse and parse the arguments
@@ -55,7 +54,6 @@ for (i, (className, color)) in enumerate(zip(CLASSES, COLORS)):
 		tuple(color), -1)
 
 # load our serialized model from disk
-print("[INFO] loading model...")
 net = cv2.dnn.readNet(args["model"])
 
 # load the input image, resize it, and construct a blob from it,
@@ -68,12 +66,10 @@ blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (1024, 512), 0,
 
 # perform a forward pass using the segmentation model
 net.setInput(blob)
-start = time.time()
-output = net.forward()
-end = time.time()
 
-# show the amount of time inference took
-print("[INFO] inference took {:.4f} seconds".format(end - start))
+output = net.forward()
+
+
 
 # infer the total number of classes along with the spatial dimensions
 # of the mask image via the shape of the output array
