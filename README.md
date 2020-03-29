@@ -29,7 +29,7 @@ To implement Semantic segmentation on images and videos using OpenCV and deep le
 
 6. Compute our color mask  from the COLORS  associated with each class label index in the classMap
 
-7. Resize the mask  and classMap  to match the input image dimensions.
+7. Resize the mask to match the input image dimensions.
 
 8. And finally, overlay the mask on the frame transparently to visualise the segmentation.
 
