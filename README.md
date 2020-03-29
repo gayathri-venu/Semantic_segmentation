@@ -40,11 +40,9 @@ To implement Semantic segmentation on images and videos using OpenCV and deep le
 
 2. Open a video stream pointer to input video file on and initialize our video writer object.
 
-3. Determine the total  number of frames in the video.
+3. Loop over the frames of the video and perform the same steps we performed for images.
 
-4. Loop over the frames and perform the same steps we performed for images.
-
-5. Write the output frame to disk. 
+4. Write the output frame to disk. 
 
 
 ### Output
