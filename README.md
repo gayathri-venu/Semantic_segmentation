@@ -52,6 +52,3 @@ To implement Semantic segmentation on images and videos using OpenCV and deep le
 ![Output2](https://github.com/gayathri-venu/Semantic_segmentation/blob/master/output/output2.png)
 
 
-### Reference
-
-https://www.pyimagesearch.com/2018/09/03/semantic-segmentation-with-opencv-and-deep-learning/
